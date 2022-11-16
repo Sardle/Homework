@@ -7,6 +7,7 @@ public class Homework {
         task1();
         task2();
         task3();
+        task4();
     }
 
     public static void task1() {
@@ -55,6 +56,14 @@ public class Homework {
             case 6 -> System.out.println("Суббота");
             case 7 -> System.out.println("Воскресенье");
             default -> System.out.println("Неизвестный день недели");
+        }
+    }
+
+    public static void task4() {
+        for (int i = 0; i <= 100; i += 5) {
+            if (i != 0) {
+                System.out.println(i);
+            }
         }
     }
 }
