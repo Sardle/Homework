@@ -108,7 +108,7 @@ public class HomeworkTwoArrays {
         for (int[] array : twoArray) {
             for (int anInt : array) {
                 System.out.print(anInt + " ");
-                if (anInt % stop == 0) {
+                if (anInt % stop == 0 && anInt != 0) {
                     System.out.println("\nThe desired element was found: " + anInt);
                     stopLoop = true;
                     break;
