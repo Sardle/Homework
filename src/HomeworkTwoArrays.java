@@ -9,25 +9,14 @@ public class HomeworkTwoArrays {
     public static void main(String[] args) {
         twoDimenToOneDimen();
         onlyText();
+        stopNumber();
     }
 
     public static void twoDimenToOneDimen() {
         System.out.print("Enter two numbers for the dimension of the array: ");
         int column = scanner.nextInt();
         int row = scanner.nextInt();
-        int[][] twoArray = new int[column][row];
-        for (int i = 0; i < twoArray.length; i++) {
-            for (int j = 0; j < twoArray[i].length; j++) {
-                twoArray[i][j] = random.nextInt(101);
-            }
-        }
-        System.out.println("The resulting array:");
-        for (int[] array : twoArray) {
-            for (int anInt : array) {
-                System.out.print(anInt + " ");
-            }
-            System.out.println();
-        }
+        int[][] twoArray = completionAndPrint(column, row);
 
         int[] oneArray = new int[column * row];
         int index = 0;
@@ -88,5 +77,46 @@ public class HomeworkTwoArrays {
             case 10 -> "ten";
             default -> null;
         };
+    }
+
+    private static int[][] completionAndPrint(int column, int row) {
+        int[][] twoArray = new int[column][row];
+        for (int i = 0; i < twoArray.length; i++) {
+            for (int j = 0; j < twoArray[i].length; j++) {
+                twoArray[i][j] = random.nextInt(101);
+            }
+        }
+        System.out.println("The resulting array:");
+        for (int[] array : twoArray) {
+            for (int anInt : array) {
+                System.out.print(anInt + " ");
+            }
+            System.out.println();
+        }
+        return twoArray;
+    }
+
+    public static void stopNumber() {
+        System.out.print("Enter two numbers for the dimension of the array: ");
+        int column = scanner.nextInt();
+        int row = scanner.nextInt();
+        int[][] twoArray = completionAndPrint(column, row);
+
+        System.out.print("\nEnter the number: ");
+        int stop = scanner.nextInt();
+        boolean stopLoop = false;
+        for (int[] array : twoArray) {
+            for (int anInt : array) {
+                System.out.print(anInt + " ");
+                if (anInt % stop == 0) {
+                    System.out.println("\nThe desired element was found: " + anInt);
+                    stopLoop = true;
+                    break;
+                }
+            }
+            if (!stopLoop) System.out.println();
+            else break;
+        }
+        if (!stopLoop) System.out.println("The desired element was not found");
     }
 }
