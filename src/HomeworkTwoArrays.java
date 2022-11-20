@@ -35,20 +35,11 @@ public class HomeworkTwoArrays {
         for (int i = 0; i < threeArray.length; i++) {
             for (int j = 0; j < threeArray[i].length; j++) {
                 for (int k = 0; k < threeArray[i][j].length; k++) {
-                    threeArray[i][j][k] = random.nextInt(11);
+                    threeArray[i][j][k] = random.nextInt(10) + 1;
                 }
             }
         }
-        System.out.println("The resulting array:");
-        for (int[][] twoArray : threeArray) {
-            for (int[] array : twoArray) {
-                for (int anInt : array) {
-                    System.out.print(anInt + " ");
-                }
-                System.out.println();
-            }
-            System.out.println();
-        }
+        System.out.println("The resulting array: " + Arrays.deepToString(threeArray));
 
         System.out.println("Replaced array:");
         for (int[][] twoArray : threeArray) {
@@ -64,7 +55,6 @@ public class HomeworkTwoArrays {
 
     private static String numbers(int number) {
         return switch (number) {
-            case 0 -> "zero";
             case 1 -> "one";
             case 2 -> "two";
             case 3 -> "three";
@@ -86,13 +76,7 @@ public class HomeworkTwoArrays {
                 twoArray[i][j] = random.nextInt(101);
             }
         }
-        System.out.println("The resulting array:");
-        for (int[] array : twoArray) {
-            for (int anInt : array) {
-                System.out.print(anInt + " ");
-            }
-            System.out.println();
-        }
+        System.out.println("The resulting array: " + Arrays.deepToString(twoArray));
         return twoArray;
     }
 
@@ -105,17 +89,18 @@ public class HomeworkTwoArrays {
         System.out.print("\nEnter the number: ");
         int stop = scanner.nextInt();
         boolean stopLoop = false;
-        for (int[] array : twoArray) {
-            for (int anInt : array) {
-                System.out.print(anInt + " ");
-                if (anInt % stop == 0 && anInt != 0) {
-                    System.out.println("\nThe desired element was found: " + anInt);
-                    stopLoop = true;
-                    break;
+        outerloop: {
+            for (int[] array : twoArray) {
+                for (int anInt : array) {
+                    System.out.print(anInt + " ");
+                    if (anInt % stop == 0 && anInt != 0) {
+                        System.out.println("\nThe desired element was found: " + anInt);
+                        stopLoop = true;
+                        break outerloop;
+                    }
                 }
+                System.out.println();
             }
-            if (!stopLoop) System.out.println();
-            else break;
         }
         if (!stopLoop) System.out.println("The desired element was not found");
     }
