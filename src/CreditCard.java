@@ -14,7 +14,12 @@ public class CreditCard {
     }
 
     public void withdrawAmount(int amount) {
-        accountStatus -= amount;
+        if (amount > accountStatus || accountStatus == 0) {
+            System.out.println("\nError! Insufficient funds");
+        } else {
+            accountStatus -= amount;
+            System.out.println("Successfully");
+        }
     }
 
     @Override
