@@ -12,21 +12,19 @@ public final class A1SimCard extends SimCard {
     @Override
     public void makeCall(String number) {
         if (checkCall(number)) {
-            if (getBalance() - 1 > 0) {
-                setBalance((getBalance() - 1));
-                System.out.println("\nЗвоню на номер: " + number);
-            } else {
-                System.out.println("\nЗвоню на номер: " + number +
-                        "\nЗвонок запрещен. Недостаточно средств!");
-            }
+            call(number, 1);
         } else {
-            if (getBalance() - 3 > 0) {
-                setBalance((getBalance() - 3));
-                System.out.println("\nЗвоню на номер: " + number);
-            } else {
-                System.out.println("\nЗвоню на номер: " + number +
-                        "\nЗвонок запрещен. Недостаточно средств!");
-            }
+            call(number, 3);
+        }
+    }
+
+    private void call(String number, int price) {
+        if (getBalance() - price > 0) {
+            setBalance((getBalance() - price));
+            System.out.println("\nЗвоню на номер: " + number);
+        } else {
+            System.out.println("\nЗвоню на номер: " + number +
+                    "\nЗвонок запрещен. Недостаточно средств!");
         }
     }
 
