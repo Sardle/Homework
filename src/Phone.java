@@ -6,18 +6,18 @@ public class Phone {
     }
 
     public void insertNewSim(SimCard newSimCard) {
-        simCard = newSimCard;
-        System.out.println("Номер - " + newSimCard.getNumber() +
+        this.simCard = newSimCard;
+        System.out.println("\nНомер - " + newSimCard.getNumber() +
                 "\nИмя оператора - " + newSimCard.getOperatorName() +
                 "\nБаланс - " + newSimCard.getBalance());
     }
 
-    public void makeCall(SimCard sim) {
-        simCard.makeCall(sim);
+    public void makeCall(String number) {
+        simCard.makeCall(number);
     }
 
-    public void receiveCall(SimCard sim) {
-        simCard.receiveCall(sim);
+    public void receiveCall(String number) {
+        simCard.receiveCall(number);
     }
 
     public void printBalance() {

@@ -10,35 +10,35 @@ public final class A1SimCard extends SimCard {
     }
 
     @Override
-    public void makeCall(SimCard simCard) {
-        if (simCard instanceof A1SimCard) {
+    public void makeCall(String number) {
+        if (checkCall(number)) {
             if (getBalance() - 1 > 0) {
                 setBalance((getBalance() - 1));
-                System.out.println("\nЗвоню на номер: " + simCard.getNumber());
+                System.out.println("\nЗвоню на номер: " + number);
             } else {
-                System.out.println("\nЗвонок запрещен. Недостаточно средств!");
+                System.out.println("\nЗвоню на номер: " + number +
+                        "\nЗвонок запрещен. Недостаточно средств!");
             }
         } else {
             if (getBalance() - 3 > 0) {
                 setBalance((getBalance() - 3));
-                System.out.println("\nЗвоню на номер: " + simCard.getNumber());
+                System.out.println("\nЗвоню на номер: " + number);
             } else {
-                System.out.println("\nЗвонок запрещен. Недостаточно средств!");
+                System.out.println("\nЗвоню на номер: " + number +
+                        "\nЗвонок запрещен. Недостаточно средств!");
             }
         }
     }
 
     @Override
-    public void receiveCall(SimCard simCard) {
-        if (simCard instanceof A1SimCard) {
-            System.out.println("\nПринимаю звонок с номера: " + simCard.getNumber());
-        } else {
-            if (getBalance() - 1 > 0) {
-                setBalance((getBalance() - 1));
-                System.out.println("\nПринимаю звонок с номера: " + simCard.getNumber());
-            } else {
-                System.out.println("\nПринять звонок нельзя. Недостаточно средств!");
-            }
+    public void receiveCall(String number) {
+        if (!checkCall(number)) {
+            setBalance((getBalance() - 1));
         }
+        System.out.println("\nПринимаю звонок с номера: " + number);
+    }
+
+    public Boolean checkCall(String number) {
+        return number.matches("33.*");
     }
 }

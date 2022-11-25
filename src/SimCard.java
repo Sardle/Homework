@@ -23,15 +23,15 @@ public class SimCard {
         return null;
     }
 
-    public void makeCall(SimCard simCard) {
+    public void makeCall(String number) {
         if (getBalance() > 0) {
-            System.out.println("Звоню на номер: " + simCard.getNumber());
+            System.out.println("Звоню на номер: " + number);
         } else {
             System.out.println("Звонок запрещен. Недостаточно средств!");
         }
     }
 
-    public void receiveCall(SimCard simCard) {
-        System.out.println("Принимаю звонок с номера: " + simCard.getNumber());
+    public void receiveCall(String number) {
+        System.out.println("Принимаю звонок с номера: " + number);
     }
 }
