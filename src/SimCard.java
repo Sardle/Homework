@@ -1,10 +1,18 @@
 public class SimCard {
+    private String pinCode;
     private int balance;
     private String number;
 
-    protected SimCard(int balance, String number) {
+
+    protected SimCard(int balance, String number, String pinCode) {
         this.balance = balance;
         this.number = number;
+        this.pinCode = pinCode;
+        System.out.println("ПИН код номера - " + number + ": " + pinCode);
+    }
+
+    public boolean checkPin(String inputPin) {
+        return pinCode.equals(inputPin);
     }
 
     public int getBalance() {

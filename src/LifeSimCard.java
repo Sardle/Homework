@@ -1,7 +1,7 @@
 public final class LifeSimCard extends SimCard {
 
-    public LifeSimCard(int balance, String number) {
-        super(balance, "44" + number);
+    public LifeSimCard(int balance, String number, String pinCode) {
+        super(balance, "44" + number, pinCode);
     }
 
     @Override

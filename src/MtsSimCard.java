@@ -1,7 +1,7 @@
 public final class MtsSimCard extends SimCard {
 
-    public MtsSimCard(int balance, String number) {
-        super(balance, "29" + number);
+    public MtsSimCard(int balance, String number, String pinCode) {
+        super(balance, "29" + number, pinCode);
     }
 
     @Override

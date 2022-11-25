@@ -1,7 +1,7 @@
 public final class A1SimCard extends SimCard {
 
-    public A1SimCard(int balance, String number) {
-        super(balance, "33" + number);
+    public A1SimCard(int balance, String number, String pinCode) {
+        super(balance, "33" + number, pinCode);
     }
 
     @Override
