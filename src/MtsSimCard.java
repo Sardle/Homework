@@ -11,16 +11,9 @@ public final class MtsSimCard extends SimCard {
 
     @Override
     public void makeCall(String number) {
-        if (checkCall(number)) {
-            call(number, 1);
-        } else {
-            call(number, 3);
-        }
-    }
-
-    private void call(String number, int price) {
-        if (getBalance() - price > 0) {
-            setBalance((getBalance() - price));
+        int price = checkCall(number) ? 1 : 3;
+        if (price <= getBalance()) {
+            setBalance(getBalance() - price);
             System.out.println("\nЗвоню на номер: " + number);
         } else {
             System.out.println("\nЗвоню на номер: " + number +
