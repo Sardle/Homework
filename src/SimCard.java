@@ -2,7 +2,15 @@ public class SimCard {
     private String pinCode;
     private int balance;
     private String number;
+    private boolean block = false;
 
+    public boolean isBlock() {
+        return block;
+    }
+
+    public void setBlock(boolean block) {
+        this.block = block;
+    }
 
     protected SimCard(int balance, String number, String pinCode) {
         this.balance = balance;

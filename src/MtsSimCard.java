@@ -1,4 +1,13 @@
 public final class MtsSimCard extends SimCard {
+    private boolean block = false;
+
+    public boolean isBlock() {
+        return block;
+    }
+
+    public void setBlock(boolean block) {
+        this.block = block;
+    }
 
     public MtsSimCard(int balance, String number, String pinCode) {
         super(balance, "29" + number, pinCode);

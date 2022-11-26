@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class App {
     private SimCard[] simCards = new SimCard[(int) (Math.random() * 10 + 1)];
     private boolean exit = true;
-    private boolean block = false;
     private SimCard oldSimCard;
     private Scanner scanner = new Scanner(System.in);
 
@@ -28,18 +27,27 @@ public class App {
         while (exit) {
             System.out.print("\nВведите номер желаемой опции: ");
             String input = scanner.nextLine();
-            if (block) {
-                switch (input) {
-                    case "1" -> on(phone);
-                    case "2" -> off(phone);
-                    default -> System.out.println("\nВАШ ТЕЛЕФОН ЗАБЛОКИРОВАН! ДЕЙСТВИЕ НЕДОСТУПНО!\n");
-                }
-            } else if (!phone.isIncluded()) {
+            if (!phone.isIncluded()) {
                 switch (input) {
                     case "1" -> on(phone);
                     case "2" -> off(phone);
                     case "3" -> newSim(phone, input);
-                    default -> System.out.println("\nВаш телефон выключен! Действие недоступно!\n");
+                    case "9" -> {
+                        System.out.println("\nBye!");
+                        exit = false;
+                    }
+                    default -> System.out.println("\nВаш телефон выключен! Действие недоступно!");
+                }
+            } else if (phone.isBlock()) {
+                switch (input) {
+                    case "1" -> on(phone);
+                    case "2" -> off(phone);
+                    case "3" -> newSim(phone, input);
+                    case "9" -> {
+                        System.out.println("\nBye!");
+                        exit = false;
+                    }
+                    default -> System.out.println("\nВАШ ТЕЛЕФОН ЗАБЛОКИРОВАН! ДЕЙСТВИЕ НЕДОСТУПНО!");
                 }
             } else {
                 switch (input) {
@@ -55,28 +63,31 @@ public class App {
                         System.out.println("\nBye!");
                         exit = false;
                     }
-                    default -> System.out.println("\nНеверный номер опции. Повторите!\n");
+                    default -> System.out.println("\nНеверный номер опции. Повторите!");
                 }
             }
         }
     }
 
     private void on(Phone phone) {
-        if (phone.isIncluded()) {
-            System.out.println("\nТелефон и так включен включен!\n");
+        if (phone.isBlock()) {
+            System.out.println("\nВАШ ТЕЛЕФОН ЗАБЛОКИРОВАН! ТЕЛЕФОН ВКЛЮЧЕН НО ДЕЙСТВИЯ НЕДОСТУПНЫ!");
+            phone.setIncluded(true);
+        } else if (phone.isIncluded()) {
+            System.out.println("\nТелефон и так включен!");
         } else {
             if (!phone.turnOn()) {
-                block = true;
+                phone.setBlock(true);
             }
         }
     }
 
     private void off(Phone phone) {
         if (phone.isIncluded()) {
+            phone.setIncluded(false);
             phone.turnOff();
-            block = false;
         } else {
-            System.out.println("\nТелефон и так был выключен!\n");
+            System.out.println("\nТелефон и так был выключен!");
         }
     }
 
@@ -89,10 +100,17 @@ public class App {
             input = scanner.nextLine();
         }
         oldSimCard = phone.getSimCard();
-        if (phone.insertNewSim(simCards[Integer.parseInt(input) - 1])) {
+        if (!phone.isIncluded()) {
+            phone.insertNewSimInOffPhone(simCards[Integer.parseInt(input) - 1]);
             simCards[Integer.parseInt(input) - 1] = oldSimCard;
         } else {
-            block = true;
+            if (phone.insertNewSim(simCards[Integer.parseInt(input) - 1])) {
+                simCards[Integer.parseInt(input) - 1] = oldSimCard;
+                phone.setBlock(false);
+            } else {
+                simCards[Integer.parseInt(input) - 1] = oldSimCard;
+                phone.setBlock(true);
+            }
         }
     }
 
@@ -158,8 +176,7 @@ public class App {
                 6. Совершить звонок.
                 7. Принять звонок.
                 8. Положить деньги на баланс.
-                9. Завершить программу.
-                """);
+                9. Завершить программу.""");
     }
 
     private String randomNumber() {

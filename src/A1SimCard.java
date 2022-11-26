@@ -1,4 +1,13 @@
 public final class A1SimCard extends SimCard {
+    private boolean block = false;
+
+    public boolean isBlock() {
+        return block;
+    }
+
+    public void setBlock(boolean block) {
+        this.block = block;
+    }
 
     public A1SimCard(int balance, String number, String pinCode) {
         super(balance, "33" + number, pinCode);
