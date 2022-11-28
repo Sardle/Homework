@@ -1,3 +1,5 @@
+package HomeworkClass;
+
 import java.util.Scanner;
 
 public class Homework {

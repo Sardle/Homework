@@ -1,3 +1,5 @@
+package HomeworkSimCard;
+
 import java.util.Scanner;
 
 public class Phone {

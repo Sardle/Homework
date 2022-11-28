@@ -1,4 +1,6 @@
-public final class LifeSimCard extends SimCard {
+package HomeworkSimCard;
+
+public final class MtsSimCard extends SimCard {
     private boolean block = false;
 
     public boolean isBlock() {
@@ -9,13 +11,13 @@ public final class LifeSimCard extends SimCard {
         this.block = block;
     }
 
-    public LifeSimCard(int balance, String number, String pinCode) {
-        super(balance, "44" + number, pinCode);
+    public MtsSimCard(int balance, String number, String pinCode) {
+        super(balance, "29" + number, pinCode);
     }
 
     @Override
     public String getOperatorName() {
-        return "Life";
+        return "MTS";
     }
 
     @Override
@@ -39,6 +41,6 @@ public final class LifeSimCard extends SimCard {
     }
 
     public Boolean checkCall(String number) {
-        return number.matches("44.*");
+        return number.matches("29.*");
     }
 }

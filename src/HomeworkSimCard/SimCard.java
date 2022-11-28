@@ -1,3 +1,5 @@
+package HomeworkSimCard;
+
 public class SimCard {
     private String pinCode;
     private int balance;
