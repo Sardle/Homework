@@ -1,0 +1,189 @@
+import java.util.Scanner;
+
+public class App {
+    private SimCard[] simCards = new SimCard[(int) (Math.random() * 10 + 1)];
+    private boolean exit = true;
+    private SimCard oldSimCard;
+    private Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        App app = new App();
+        app.appSim();
+    }
+
+    public void appSim() {
+        System.out.println("Данный телефон: ");
+        Phone phone = new Phone(new MtsSimCard((int) (Math.random() * 10 + 10), "296574487", "1111"));
+
+        System.out.println("Остальные сим карты: ");
+        createSim();
+
+        printInfo();
+
+        options(phone);
+    }
+
+    private void options(Phone phone) {
+        while (exit) {
+            System.out.print("\nВведите номер желаемой опции: ");
+            String input = scanner.nextLine();
+            if (!phone.isIncluded()) {
+                switch (input) {
+                    case "1" -> on(phone);
+                    case "2" -> off(phone);
+                    case "3" -> newSim(phone, input);
+                    case "9" -> {
+                        System.out.println("\nBye!");
+                        exit = false;
+                    }
+                    default -> System.out.println("\nВаш телефон выключен! Действие недоступно!");
+                }
+            } else if (phone.isBlock()) {
+                switch (input) {
+                    case "1" -> on(phone);
+                    case "2" -> off(phone);
+                    case "3" -> newSim(phone, input);
+                    case "9" -> {
+                        System.out.println("\nBye!");
+                        exit = false;
+                    }
+                    default -> System.out.println("\nВАШ ТЕЛЕФОН ЗАБЛОКИРОВАН! ДЕЙСТВИЕ НЕДОСТУПНО!");
+                }
+            } else {
+                switch (input) {
+                    case "1" -> on(phone);
+                    case "2" -> off(phone);
+                    case "3" -> newSim(phone, input);
+                    case "4" -> phone.printInfoSim();
+                    case "5" -> printSimCard();
+                    case "6" -> call(phone);
+                    case "7" -> receive(phone);
+                    case "8" -> plusBalance(phone);
+                    case "9" -> {
+                        System.out.println("\nBye!");
+                        exit = false;
+                    }
+                    default -> System.out.println("\nНеверный номер опции. Повторите!");
+                }
+            }
+        }
+    }
+
+    private void on(Phone phone) {
+        if (phone.isBlock()) {
+            System.out.println("\nВАШ ТЕЛЕФОН ЗАБЛОКИРОВАН! ТЕЛЕФОН ВКЛЮЧЕН НО ДЕЙСТВИЯ НЕДОСТУПНЫ!");
+            phone.setIncluded(true);
+        } else if (phone.isIncluded()) {
+            System.out.println("\nТелефон и так включен!");
+        } else {
+            if (!phone.turnOn()) {
+                phone.setBlock(true);
+            }
+        }
+    }
+
+    private void off(Phone phone) {
+        if (phone.isIncluded()) {
+            phone.setIncluded(false);
+            phone.turnOff();
+        } else {
+            System.out.println("\nТелефон и так был выключен!");
+        }
+    }
+
+    private void newSim(Phone phone, String input) {
+        printSimCard();
+        System.out.print("Введите номер ячейки сим карты, которую желаете вставить: ");
+        input = scanner.nextLine();
+        while (!input.matches("\\d0?") || Integer.parseInt(input) > simCards.length || input.equals("0")) {
+            System.out.print("Неверный номер ячейки! Повторите ввод: ");
+            input = scanner.nextLine();
+        }
+        oldSimCard = phone.getSimCard();
+        if (!phone.isIncluded()) {
+            phone.insertNewSimInOffPhone(simCards[Integer.parseInt(input) - 1]);
+            simCards[Integer.parseInt(input) - 1] = oldSimCard;
+        } else {
+            if (phone.insertNewSim(simCards[Integer.parseInt(input) - 1])) {
+                simCards[Integer.parseInt(input) - 1] = oldSimCard;
+                phone.setBlock(false);
+            } else {
+                simCards[Integer.parseInt(input) - 1] = oldSimCard;
+                phone.setBlock(true);
+            }
+        }
+    }
+
+    private void call(Phone phone) {
+        System.out.print("Введите номер, на которые хотите позвонить: ");
+        phone.makeCall(scanner.nextLine());
+        phone.printBalance();
+    }
+
+    private void receive(Phone phone) {
+        System.out.print("Введите номер, с которого принимается звонок: ");
+        phone.receiveCall(scanner.nextLine());
+        phone.printBalance();
+    }
+
+    private void plusBalance(Phone phone) {
+        System.out.print("Введите количество денег, которые вы хотите положить на телефон: ");
+        int plusBalance = Integer.parseInt(scanner.nextLine());
+        phone.getSimCard().setBalance(phone.getSimCard().getBalance() + plusBalance);
+        phone.printBalance();
+    }
+
+    private void createSim() {
+        for (int i = 0; i < simCards.length; i++) {
+            simCards[i] = randomSim();
+        }
+    }
+
+    private SimCard randomSim() {
+        int random = (int) (Math.random() * 3 + 1);
+        switch (random) {
+            case 1 -> {
+                return new MtsSimCard((int) (Math.random() * 10 + 10), randomNumber(), randomPin());
+            }
+            case 2 -> {
+                return new LifeSimCard((int) (Math.random() * 10 + 10), randomNumber(), randomPin());
+            }
+            case 3 -> {
+                return new A1SimCard((int) (Math.random() * 10 + 10), randomNumber(), randomPin());
+            }
+            default -> {
+                return null;
+            }
+        }
+    }
+
+    private void printSimCard() {
+        System.out.println("\nДоступные симкарты: ");
+        for (int i = 0; i < simCards.length; i++) {
+            System.out.println((i + 1) + ". Оператор - " + simCards[i].getOperatorName() +
+                    ". Номер - " + simCards[i].getNumber() + ". Баланс - " + simCards[i].getBalance());
+        }
+    }
+
+    private void printInfo() {
+        System.out.println("""
+                Доступные опции:
+                1. Включить телефон.
+                2. Выключить телефон.
+                3. Вставить новую сим карту.
+                4. Информация о сим карте в телефоне.
+                5. Информация о доступных сим картах.
+                6. Совершить звонок.
+                7. Принять звонок.
+                8. Положить деньги на баланс.
+                9. Завершить программу.""");
+    }
+
+    private String randomNumber() {
+        return String.valueOf((int) (Math.random() * 9999999 + 1000000));
+    }
+
+    private String randomPin() {
+        return String.valueOf((int) (Math.random() * 9999 + 1000));
+    }
+}
