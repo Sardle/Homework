@@ -1,5 +1,5 @@
 package leason8.homework;
 
-public class Economist extends Team {
+public class Economist extends Employee {
     private Workplace workplace = getWorkplaces();
 }
