@@ -3,7 +3,7 @@ package leason9.homework;
 import java.util.Scanner;
 
 public class App {
-    private static final String CHECK_DATA = "[A-Za-z\\d_]{1,20}";
+    private static final String INPUT_PATTERN = "[A-Za-z\\d_]{1,20}";
 
     public static void main(String[] args) {
         registration();
@@ -25,9 +25,9 @@ public class App {
     }
 
     private static boolean checkLoginAndPassword(String login, String password, String confirmPassword) throws WrongLoginException, WrongPasswordException {
-        if (!login.matches(CHECK_DATA)) {
+        if (!login.matches(INPUT_PATTERN)) {
             throw new WrongLoginException("Неверный логин");
-        } else if (!password.matches(CHECK_DATA) || !password.equals(confirmPassword)) {
+        } else if (!password.matches(INPUT_PATTERN) || !password.equals(confirmPassword)) {
             throw new WrongPasswordException("Неверный пароль");
         } else {
             return true;
