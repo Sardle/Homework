@@ -6,19 +6,15 @@ public class App {
     private static final String CHECK_DATA = "[A-Za-z\\d_]{1,20}";
 
     public static void main(String[] args) {
-        inputCheck();
+        registration();
     }
 
-    public static void inputCheck() {
+    public static void registration() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите логин: ");
         String login = scanner.nextLine();
         System.out.print("Введите пароль: ");
         String password = scanner.nextLine();
-        checkInputData(login, password);
-    }
-
-    public static void checkInputData(String login, String password) {
         try {
             if (checkLoginAndPassword(login, password, "Qwerty")) {
                 System.out.println("Все верно! Вход разрешен");

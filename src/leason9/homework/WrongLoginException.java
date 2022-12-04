@@ -1,6 +1,6 @@
 package leason9.homework;
 
-public class WrongLoginException extends Exception{
+public class WrongLoginException extends Exception {
 
     public WrongLoginException() {
     }
