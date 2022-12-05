@@ -6,6 +6,7 @@ public class Document {
     public static boolean checkPattern(String document) {
         return document.matches(DOCUMENT_PATTERN);
     }
+
     public static void printTwoBlocksNumbers(String document) {
         String twoBlocksNumbers = document.replaceAll("-...-\\d[A-z]\\d[A-z]", "")
                 .replaceAll("-[A-z]{3}", "");
