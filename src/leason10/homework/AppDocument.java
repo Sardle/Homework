@@ -7,16 +7,15 @@ import java.io.InputStreamReader;
 public class AppDocument {
 
     public static void main(String[] args) {
-        System.out.print("Enter the document number: ");
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            String input = bufferedReader.readLine();
-            while (!Document.printInfoDocument(input)) {
-                System.out.print("\nEnter the document number: ");
+        String input;
+        do {
+            System.out.print("\nEnter the document number: ");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+            try {
                 input = bufferedReader.readLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } while (!Document.printInfoDocument(input));
     }
 }

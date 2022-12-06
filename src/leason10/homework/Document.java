@@ -3,11 +3,9 @@ package leason10.homework;
 public class Document {
     private static final String DOCUMENT_PATTERN = "\\d{4}-[A-z]{3}-\\d{4}-[A-z]{3}-\\d[A-z]\\d[A-z]";
 
-
     private static boolean checkPattern(String document) {
         return document.matches(DOCUMENT_PATTERN);
     }
-
 
     private static void printTwoBlocksNumbers(String document) {
         String twoBlocksNumbers = document.replaceAll("-...-\\d[A-z]\\d[A-z]", "")
