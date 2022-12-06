@@ -7,10 +7,10 @@ import java.io.InputStreamReader;
 public class AppDocument {
 
     public static void main(String[] args) {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String input;
         do {
             System.out.print("\nEnter the document number: ");
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
             try {
                 input = bufferedReader.readLine();
             } catch (IOException e) {
