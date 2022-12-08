@@ -1,4 +1,4 @@
-package leason10.homework;
+package lesson10.homework;
 
 public class Document {
     private static final String DOCUMENT_PATTERN = "\\d{4}-[A-z]{3}-\\d{4}-[A-z]{3}-\\d[A-z]\\d[A-z]";

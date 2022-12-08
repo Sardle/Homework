@@ -1,4 +1,4 @@
-package leason10.practice;
+package lesson10.practice;
 
 import java.io.BufferedReader;
 import java.io.IOException;

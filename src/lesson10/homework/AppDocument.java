@@ -1,4 +1,4 @@
-package leason10.homework;
+package lesson10.homework;
 
 import java.io.BufferedReader;
 import java.io.IOException;
