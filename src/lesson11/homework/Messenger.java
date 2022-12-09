@@ -108,11 +108,9 @@ public class Messenger {
 
     private int selectUserFromList() throws IOException {
         String numberList = bufferedReader.readLine();
-        if (!numberList.matches("\\d+") || Integer.parseInt(numberList) - 1 > getUsers().size()) {
-            while (!numberList.matches("\\d+") || Integer.parseInt(numberList) - 1 > getUsers().size()) {
-                System.out.print("Invalid user number! Retry! : ");
-                numberList = bufferedReader.readLine();
-            }
+        while (!numberList.matches("\\d+") || Integer.parseInt(numberList) - 1 > getUsers().size()) {
+            System.out.print("Invalid user number! Retry! : ");
+            numberList = bufferedReader.readLine();
         }
         return Integer.parseInt(numberList) - 1;
     }
@@ -128,17 +126,15 @@ public class Messenger {
 
     private void readMessage() throws IOException {
         System.out.println("You have " + getSelectedUser().getCountMessages() + " unread messages!");
-        if (getSelectedUser().getCountMessages() != 0) {
-            while (getSelectedUser().getCountMessages() != 0) {
-                System.out.print("To read each one, write \"next\" or write \"back\": ");
-                String input = bufferedReader.readLine();
-                if (input.equals("back")) {
-                    return;
-                } else if (!input.matches("next")) {
-                    System.out.println("Invalid!");
-                } else {
-                    getSelectedUser().readMessage();
-                }
+        while (getSelectedUser().getCountMessages() != 0) {
+            System.out.print("To read each one, write \"next\" or write \"back\": ");
+            String input = bufferedReader.readLine();
+            if (input.equals("back")) {
+                return;
+            } else if (!input.matches("next")) {
+                System.out.println("Invalid!");
+            } else {
+                getSelectedUser().readMessage();
             }
         }
     }
