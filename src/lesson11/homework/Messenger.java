@@ -71,7 +71,7 @@ public class Messenger {
     }
 
     private String enterOption() throws IOException {
-        System.out.print("Enter the options number: ");
+        System.out.print("Enter the options number(for help, enter the number 6): ");
         return bufferedReader.readLine();
     }
 
