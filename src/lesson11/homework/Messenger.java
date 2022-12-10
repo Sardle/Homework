@@ -11,6 +11,7 @@ public class Messenger {
     private boolean exit = true;
     private User selectedUser = new User();
     private boolean block = true;
+    private boolean firstRegistration = true;
 
     public ArrayList<User> getUsers() {
         return users;
@@ -26,6 +27,9 @@ public class Messenger {
 
     public void messengerLogic() {
         try {
+            if (firstRegistration) {
+                startMessenger();
+            }
             printHelp();
             while (exit) {
                 printSelectUser();
@@ -54,6 +58,16 @@ public class Messenger {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void startMessenger() throws IOException {
+        System.out.print("Register a new user for the messenger to work(Enter the name of yhe new User) : ");
+        String nameUser = bufferedReader.readLine();
+        getUsers().add(new User(nameUser));
+        setSelectedUser(getUsers().get(0));
+        System.out.println("User successfully added!");
+        firstRegistration = false;
+        block = false;
     }
 
     private String enterOption() throws IOException {
