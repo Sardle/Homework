@@ -6,12 +6,18 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Messenger {
+    private final String EXIT_ACTION = "0";
+    private final String REGISTER_USER_ACTION = "1";
+    private final String SELECT_USER_ACTION = "2";
+    private final String WRITE_MESSAGE_ACTION = "3";
+    private final String READ_MESSAGE_ACTION = "4";
+    private final String DELETE_USER_ACTION = "5";
+    private final String PRINT_HELP_ACTION = "6";
+    private final String BACK_TO_MENU = "back";
+    private final String NEXT_MESSAGE = "[Nn][Ee][Xx][Tt]";
     private ArrayList<User> users = new ArrayList<>();
     private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-    private boolean exit = true;
     private User selectedUser = new User();
-    private boolean block = true;
-    private boolean firstRegistration = true;
 
     public ArrayList<User> getUsers() {
         return users;
@@ -25,49 +31,44 @@ public class Messenger {
         this.selectedUser = selectedUser;
     }
 
-    public void messengerLogic() {
-        try {
-            if (firstRegistration) {
-                startMessenger();
-            }
-            printHelp();
-            while (exit) {
-                printSelectUser();
-                String inputOptions = enterOption();
-                if (!block) {
-                    switch (inputOptions) {
-                        case "0" -> {
-                            System.out.println("Bye!");
-                            exit = false;
-                        }
-                        case "1" -> registerUser();
-                        case "2" -> selectUser();
-                        case "3" -> writeMessage();
-                        case "4" -> readMessage();
-                        case "5" -> deleteUser();
-                        case "6" -> printHelp();
-                        default -> System.out.println("Invalid option number!");
-                    }
-                } else {
-                    System.out.println("\nNo users available(register a new user)!");
-                    registerUser();
-                    setSelectedUser(getUsers().get(0));
-                    messengerLogic();
+    public void messengerLogic() throws IOException {
+        printHelp();
+        while (true) {
+            printSelectUser();
+            String inputOptions = enterOption();
+            switch (inputOptions) {
+                case REGISTER_USER_ACTION -> registerUser();
+                case SELECT_USER_ACTION -> selectUser();
+                case WRITE_MESSAGE_ACTION -> writeMessage();
+                case READ_MESSAGE_ACTION -> readMessage();
+                case DELETE_USER_ACTION -> deleteUser();
+                case PRINT_HELP_ACTION -> printHelp();
+                case EXIT_ACTION -> {
+                    System.out.println("Bye!");
+                    return;
                 }
+                default -> System.out.println("Invalid option number!");
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
         }
     }
 
-    private void startMessenger() throws IOException {
+    private void beginMessenger() throws IOException {
         System.out.print("Register a new user for the messenger to work(Enter the name of yhe new User) : ");
         String nameUser = bufferedReader.readLine();
         getUsers().add(new User(nameUser));
         setSelectedUser(getUsers().get(0));
         System.out.println("User successfully added!");
-        firstRegistration = false;
-        block = false;
+
+        checkForUser();
+        messengerLogic();
+    }
+
+    private void checkForUser() throws IOException {
+        if (getUsers().size() == 0) {
+            System.out.println("\nNo users available(register a new user)!");
+            registerUser();
+            setSelectedUser(getUsers().get(0));
+        }
     }
 
     private String enterOption() throws IOException {
@@ -106,7 +107,6 @@ public class Messenger {
         String nameUser = bufferedReader.readLine();
         getUsers().add(new User(nameUser));
         System.out.println("User successfully added!");
-        block = false;
     }
 
     private void selectUser() throws IOException {
@@ -143,9 +143,9 @@ public class Messenger {
         while (getSelectedUser().getCountMessages() != 0) {
             System.out.print("To read each one, write \"next\" or write \"back\": ");
             String input = bufferedReader.readLine();
-            if (input.equals("back")) {
+            if (input.equalsIgnoreCase(BACK_TO_MENU)) {
                 return;
-            } else if (!input.matches("next")) {
+            } else if (!input.matches(NEXT_MESSAGE)) {
                 System.out.println("Invalid!");
             } else {
                 getSelectedUser().readMessage();
@@ -162,13 +162,14 @@ public class Messenger {
         }
         getUsers().remove(numberUser);
         System.out.println("User successfully deleted!");
-        if (getUsers().size() == 0) {
-            block = true;
-        }
     }
 
     public static void main(String[] args) {
         Messenger messenger = new Messenger();
-        messenger.messengerLogic();
+        try {
+            messenger.beginMessenger();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
