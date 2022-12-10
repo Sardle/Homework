@@ -31,7 +31,7 @@ public class Messenger {
         this.selectedUser = selectedUser;
     }
 
-    public void messengerLogic() throws IOException {
+    public void selectOption() throws IOException {
         printHelp();
         while (true) {
             printSelectUser();
@@ -60,7 +60,7 @@ public class Messenger {
         System.out.println("User successfully added!");
 
         checkForUser();
-        messengerLogic();
+        selectOption();
     }
 
     private void checkForUser() throws IOException {
