@@ -6,15 +6,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Messenger {
-    private final String EXIT_ACTION = "0";
-    private final String REGISTER_USER_ACTION = "1";
-    private final String SELECT_USER_ACTION = "2";
-    private final String WRITE_MESSAGE_ACTION = "3";
-    private final String READ_MESSAGE_ACTION = "4";
-    private final String DELETE_USER_ACTION = "5";
-    private final String PRINT_HELP_ACTION = "6";
-    private final String BACK_TO_MENU = "back";
-    private final String NEXT_MESSAGE = "[Nn][Ee][Xx][Tt]";
+    private static final String EXIT_ACTION = "0";
+    private static final String REGISTER_USER_ACTION = "1";
+    private static final String SELECT_USER_ACTION = "2";
+    private static final String WRITE_MESSAGE_ACTION = "3";
+    private static final String READ_MESSAGE_ACTION = "4";
+    private static final String DELETE_USER_ACTION = "5";
+    private static final String PRINT_HELP_ACTION = "6";
+    private static final String BACK_TO_MENU = "back";
+    private static final String NEXT_MESSAGE = "[Nn][Ee][Xx][Tt]";
     private ArrayList<User> users = new ArrayList<>();
     private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     private User selectedUser = new User();
@@ -64,7 +64,7 @@ public class Messenger {
     }
 
     private void checkForUser() throws IOException {
-        if (getUsers().size() == 0) {
+        if (getUsers().isEmpty()) {
             System.out.println("\nNo users available(register a new user)!");
             registerUser();
             setSelectedUser(getUsers().get(0));
