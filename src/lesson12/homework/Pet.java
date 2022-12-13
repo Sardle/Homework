@@ -1,6 +1,6 @@
 package lesson12.homework;
 
-public class Pet {
+public abstract class Pet {
     private String name;
     private String breed;
 

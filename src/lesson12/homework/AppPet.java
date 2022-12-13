@@ -27,7 +27,8 @@ public class AppPet {
             String name = bufferedReader.readLine();
             return name;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 
@@ -62,8 +63,8 @@ public class AppPet {
     }
 
     private static void printInfo(HashMap<String, Pet> mapPets) {
-        for (Pet pets : mapPets.values()) {
-            System.out.println(pets.toString());
+        for (Pet pet : mapPets.values()) {
+            System.out.println(pet.toString());
         }
     }
 }
