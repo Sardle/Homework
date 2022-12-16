@@ -28,7 +28,7 @@ public class App {
     private static void fillList() {
         int sizeList = enterSizeList();
         for (int i = 0; i < sizeList; i++) {
-            list.add((int) (Math.random() * 100));
+            list.add((int) (Math.random() * 20));
         }
     }
 }
