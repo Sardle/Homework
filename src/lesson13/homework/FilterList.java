@@ -4,59 +4,61 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class FilterList {
-    private static ArrayList<Integer> removeDuplicates(ArrayList<Integer> list) {
-        return (ArrayList<Integer>) list.stream()
+    private static ArrayList<Integer> arrayList;
+
+    public static void setArrayList(ArrayList<Integer> arrayList) {
+        FilterList.arrayList = arrayList;
+    }
+
+    private static void removeDuplicates() {
+        arrayList = (ArrayList<Integer>) arrayList.stream()
                 .distinct()
                 .collect(Collectors.toList());
+        System.out.println("List without duplicates: " + arrayList);
     }
 
-    private static ArrayList<Integer> getEvenNumbersFromRange(ArrayList<Integer> list) {
-        return (ArrayList<Integer>) list.stream()
+    private static void getEvenNumbersFromRange() {
+        arrayList = (ArrayList<Integer>) arrayList.stream()
                 .filter(it -> it >= 7 && it <= 17 && it % 2 == 0)
                 .collect(Collectors.toList());
+        System.out.println("All even elements in the range from 7 to 17: " + arrayList);
     }
 
-    private static ArrayList<Integer> multiplyList(ArrayList<Integer> list) {
-        return (ArrayList<Integer>) list.stream()
+    private static void multiplyList() {
+       arrayList = (ArrayList<Integer>) arrayList.stream()
                 .map(it -> it * 2)
-                .collect(Collectors.toList());
+               .collect(Collectors.toList());
+        System.out.println("Multiply all elements by two: " + arrayList);
     }
 
-    private static ArrayList<Integer> leaveMoreTen(ArrayList<Integer> list) {
-        return (ArrayList<Integer>) list.stream()
+    private static void leaveMoreTen() {
+        arrayList = (ArrayList<Integer>) arrayList.stream()
                 .filter(it -> it > 10)
                 .collect(Collectors.toList());
+        System.out.println("Items greater than 10: " + arrayList);
     }
 
-    private static long getCountItemsList(ArrayList<Integer> list) {
-        return list.stream()
+    private static long getCountItemsList() {
+        return arrayList.stream()
                 .count();
     }
 
-    private static double getArithmeticMean(ArrayList<Integer> list) {
-        double sum = list.stream()
+    private static double getArithmeticMean() {
+        double sum = arrayList.stream()
                 .mapToDouble(it -> it)
                 .sum();
-        return sum / list.size();
+        return sum / arrayList.size();
     }
 
     public static void printAllMethods(ArrayList<Integer> list) {
-        ArrayList<Integer> withoutDuplicates = removeDuplicates(list);
-        System.out.println("List without duplicates: " + withoutDuplicates);
+        setArrayList(list);
 
-        ArrayList<Integer> onlyEvenFromRange = getEvenNumbersFromRange(withoutDuplicates);
-        System.out.println("All even elements in the range from 7 to 17: " + onlyEvenFromRange);
+        removeDuplicates();
+        getEvenNumbersFromRange();
+        multiplyList();
+        leaveMoreTen();
 
-        ArrayList<Integer> multiplyList = multiplyList(onlyEvenFromRange);
-        System.out.println("Multiply all elements by two: " + multiplyList);
-
-        ArrayList<Integer> onlyMoreTen = leaveMoreTen(multiplyList);
-        System.out.println("Items greater than 10: " + onlyMoreTen);
-
-        long countItemsList = getCountItemsList(onlyMoreTen);
-        System.out.println("Number of items in the list: " + countItemsList);
-
-        double arithmeticMean = getArithmeticMean(onlyMoreTen);
-        System.out.println("Arithmetic mean of the elements: " + arithmeticMean);
+        System.out.println("Number of items in the list: " + getCountItemsList());
+        System.out.println("Arithmetic mean of the elements: " + getArithmeticMean());
     }
 }
