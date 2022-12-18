@@ -5,21 +5,21 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class App {
-    private static ArrayList<Integer> list = new ArrayList<>();
-
     public static void main(String[] args) {
-        fillList();
-        System.out.println("Initial list: " + list);
-        list = (ArrayList<Integer>) list.stream()
+        ArrayList<Integer> initialList = createList();
+        System.out.println("Initial list: " + initialList);
+
+        ArrayList<Integer> filteredList = (ArrayList<Integer>) initialList.stream()
                 .distinct()
                 .filter(it -> it >= 7 && it <= 17 && it % 2 == 0)
                 .peek(it -> System.out.print(it + " "))
                 .map(it -> it * 2)
                 .filter(it -> it > 10)
                 .collect(Collectors.toList());
-        System.out.println("\nNumber of items in the list: " + list.stream()
+
+        System.out.println("\nNumber of items in the list: " + filteredList.stream()
                 .count());
-        System.out.println("Arithmetic mean of the elements: " + list.stream()
+        System.out.println("Arithmetic mean of the elements: " + filteredList.stream()
                 .mapToDouble(it -> it)
                 .average()
                 .getAsDouble());
@@ -38,10 +38,12 @@ public class App {
         return Integer.parseInt(input);
     }
 
-    private static void fillList() {
+    private static ArrayList<Integer> createList() {
+        ArrayList<Integer> list = new ArrayList<>();
         int sizeList = enterSizeList();
         for (int i = 0; i < sizeList; i++) {
             list.add((int) (Math.random() * 20));
         }
+        return list;
     }
 }
